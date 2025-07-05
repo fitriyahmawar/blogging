@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="row" style="padding-top: 20px;">
+        <div class="col-md-12">
+            <div class="card" style="width: 18rem;">
+                <img src="{{ artikel.gambar.url }}" class="card-img-top" alt="{{ artikel.title }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ artikel.judul }}</h5>
+                    <p class="card-text">{{ artikel.konten }}</p>
+                </div>
+               </div>
+            </div>
+        </div>
+{% endblock %}

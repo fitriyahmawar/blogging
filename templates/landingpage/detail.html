@@ -1,0 +1,56 @@
+{% extends 'landingpage/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="card card-body shadow-xl mx-3 mx-md-4 mt-n6">
+    <!-- START Blogs w/ 3 images & quote & text -->
+    <section class="py-5 mt-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 ms-auto me-auto">
+            <h6 class="opacity-7 text-uppercase font-weight-bolder text-sm">{{ artikel.kategori }}</h6>
+            <img src="{{artikel.gambar.url}}" alt="" style="width: 100%;">
+            <h3 class="title mb-4">{{ artikel.judul }}</h3>
+            <p class="text-dark">{{ artikel.konten | safe }}</p>
+            <p class="text-dark" style="font-style: italic;">{{ artikel.created_at }}</p>
+          </div>
+        </div>
+    </section>
+
+    <section class="py-7">
+      <div class="container">
+        <div class="row">
+          <div class="col-9 text-center mx-auto">
+            <h3 class="mb-1">Lihat Artikel Lainnya</h3>
+          </div>
+          <div class="col-lg-4 mb-lg-0 mb-4">
+            {% for artikel in artikel_lainnya %}
+            <div class="card">
+              <div class="card-header p-0 mx-3 mt-n4 position-relative z-index-1">
+                <a href="javascript:;" class="d-block blur-shadow-image">
+                  <img src="{{ artikel.gambar.url }}" class="img-fluid border-radius-md" alt="anastasia" loading="lazy">
+                </a>
+              </div>
+              <div class="card-body">
+                <span class="text-gradient text-primary text-uppercase text-xs font-weight-bold">{{ artikel.kategori }}</span>
+                <a href="javascript:;" class="card-title mt-3 h5 d-block text-darker"><a href="{% url 'detail' artikel.id %}">{{ artikel.judul }}</a>
+                <p class="card-description mb-4">
+                  {{ artikel.konten|truncatechars:200|safe }}
+                </p>
+                <div class="author align-items-center">
+                  <img src="{% static 'landingpage/assets/img/team-2.jpg' %}" alt="..." class="avatar shadow" loading="lazy">
+                  <div class="name ps-2">
+                    <span>{{ artikel.author }}</span>
+                    <div class="stats">
+                      <small>{{ artikel.created_at }} </small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+    </section>
+  </div>
+  {% endblock content %}

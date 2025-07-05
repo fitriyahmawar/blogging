@@ -1,0 +1,76 @@
+{% extends 'landingpage/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+      <div class="col-lg-7">
+        <!-- START Blogs w/ 3 rows w/ image on left & title, text, author on end-->
+        <section class="py-5">
+            {% for a in artikel %}
+          <div class="card card-plain card-blog mt-5">
+            <div class="row">
+              <div class="col-lg-4 col-md-4">
+                <div class="card-image position-relative border-radius-lg">
+                  <div class="blur-shadow-image">
+                    <img class="img border-radius-lg" src="{{ a.gambar.url }}" alt="architecture" loading="lazy">
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-7 col-md-7 my-sm-auto mt-3 ms-sm-3">
+                <h4>
+                  <a href="{% url 'detail' a.id %}" class="text-dark">{{ a.judul }}</a>
+                </h4>
+                <p>
+                  {{ a.konten|truncatechars:200|safe }} <a href="javascript:;"> Read More </a>
+                </p>
+                <div class="author">
+                  <img src="{% static 'landingpage/assets/img/team-4.jpg' %}" alt="team-4" class="avatar avatar-sm shadow me-2 border-radius-lg" loading="lazy">
+                  <p class="my-auto">{{ a.author }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </section>
+
+      </div>
+      <div class="col-lg-4 ml-auto">
+        <div class="pt-1 pb-5 position-sticky top-1">
+          <h4 class="mt-5">Kategori</h4>
+
+            {% for k in kategori %}
+          <a href="{% url 'kategori_filter' k.nama %}">
+            <div class="card justify-content-center mb-3">
+              <div class="card-body p-3">
+                <h6 class="mb-0">{{ k.nama }}</h6>
+              </div>
+            </div>
+          </a>
+            {% endfor %}
+          {% if top_berita %}
+          <h4 class="mt-5">Top Berita</h4>
+          {% for b in top_berita %}
+          <div class="card card-plain card-blog mt-4">
+            <div class="row">
+              <div class="col-lg-4 col-md-4">
+                <div class="card-image position-relative border-radius-lg">
+                  <div class="blur-shadow-image">
+                    <img class="img border-radius-lg" src="{{ b.gambar.url }}" alt="{{ b.judul }}" loading="lazy">
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-8 col-md-8 my-sm-auto mt-3">
+                <h5>
+                  <a href="{% url 'detail' b.id %}" class="text-dark font-weight-normal">{{ b.judul }}</a>
+                </h5>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock %}

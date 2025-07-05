@@ -1,0 +1,73 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block css %}
+    
+{% endblock %}
+    
+{% block content %}
+<div class="col-12">
+          <div class="card">
+            <!-- Card header -->
+            <div class="card-header">
+              <h5 class="mb-0">Daftar User<a class="btn btn-outline-warning" href="{% url 'admin_artikel_tambah' %}"> +Tambah </a></h5>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-flush" id="datatable-search">
+                <thead class="thead-light">
+                  <tr>
+                    <th>No</th>
+                    <th>Username</th>
+                    <th>Nama Lengkap</th>
+                    <th>Is Staff</th>
+                    <th class="text-center">Groups</th>
+                    <th class="text-center">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for user in daftar_user %}
+                    <tr>
+                      <td class="text-sm font-weight-normal">{{ forloop.counter }}</td>
+                      <td class="text-sm font-weight-normal">
+                        <span class="badge badge-success">{{ user.username }}</span>
+                      </td>
+                      <td class="text-sm font-weight-normal" style="color:rgb(64, 89, 157);">{{ user.first_name|default:"-" }} {{ user.last_name|default:"-" }}</td>
+                      <td class="text-sm font-weight-normal">
+                        {% if user.is_staff %}
+                        <span class="material-symbols-outlined">check_circle</span>
+                        {% else %}
+                        <span class="material-symbols-outlined">cancel</span>
+                        {% endif %}
+                      </td>
+                      <td class="text-sm font-weight-normal text-center">
+                          {% for group in user.groups.all %}
+                              <span class="badge badge-dark">{{ group.name }}</span>
+                          {% empty %}
+                              <span class="badge badge-dark">-</span>
+                          {% endfor %}
+                      </td>
+                      <td class="text-sm font-weight-normal text-center">
+                        <a class="btn btn-warning btn-sm" href="{% url 'admin_management_user_edit' user.id %}">edit</a>
+                        <a class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus?')" href="">delete</a>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+{% endblock %}
+
+
+{% block js %}
+    <script src="{% static 'dashboard/assets/js/plugins/datatables.js' %}"></script>
+    <script>
+        const dataTableBasic = new simpleDatatables.DataTable("#datatable-search", {
+      searchable: true,
+      fixedHeight: true
+    });
+    </script>
+{% endblock %}
+    
+    
